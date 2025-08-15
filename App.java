@@ -15,28 +15,31 @@ public class App {
 		phys.start();
 		ctrl.start();
 
-		//fault injection
-		// new Thread(() -> {
-		// 	try{
-		// 		Thread.sleep(15000);
-		// 		System.out.println(">>> FAILING pump 1");
-		// 		boiler.failPump(0, true);
+		boolean faultInjection = false;
 
-		// 		Thread.sleep(10000);
-		// 		System.out.println(">>> FAILING level sensor");
-		// 		boiler.failLevelSensor(true);
-
-		// 		Thread.sleep(15000);
-		// 		System.out.println(">>> REPAIRING pump 1 and level sensor");
-		// 		boiler.failPump(0, false);
-		// 		boiler.failLevelSensor(false);
-
-		// 		Thread.sleep(10000);
-        //         System.out.println(">>> FAILING ALL pumps");
-        //         for (int i = 0; i < Constants.NUM_PUMPS; i++) boiler.failPump(i, true);
-		// 	}catch(InterruptedException e){
-		// 		e.printStackTrace();
-		// 	}
-		// }).start();
+		if(faultInjection){
+			new Thread(() -> {
+				try{
+					Thread.sleep(15000);
+					System.out.println(">>> FAILING pump 1");
+					boiler.failPump(0, true);
+	
+					Thread.sleep(10000);
+					System.out.println(">>> FAILING level sensor");
+					boiler.failLevelSensor(true);
+	
+					Thread.sleep(15000);
+					System.out.println(">>> REPAIRING pump 1 and level sensor");
+					boiler.failPump(0, false);
+					boiler.failLevelSensor(false);
+	
+					Thread.sleep(10000);
+					System.out.println(">>> FAILING ALL pumps");
+					for (int i = 0; i < Constants.NUM_PUMPS; i++) boiler.failPump(i, true);
+				}catch(InterruptedException e){
+					e.printStackTrace();
+				}
+			}).start();
+		}
 	}
 }

@@ -20,8 +20,6 @@ public class Controller extends RealtimeThread{
 	@Override
 	public void run(){
 		while(true){
-			waitForNextPeriod();
-
 			Double qMeasure = sensors.readLevel();
 			Double vMeasure = sensors.readSteam();
 			int operant = boiler.countOperantPumps();
@@ -71,6 +69,8 @@ public class Controller extends RealtimeThread{
 				System.out.printf(" #%d=%.1f", i+1, pVal);
 			}
 			System.out.println("\n============================================================================================");
+
+			waitForNextPeriod();
 		}
 	}
 
